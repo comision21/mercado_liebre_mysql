@@ -1,3 +1,5 @@
+const db = require('../database/models');
+
 const fs = require('fs');
 const path = require('path');
 
@@ -10,23 +12,28 @@ const controller = {
 	// Root - Show all products
 	index: (req, res) => {
 		// Do the magic
-		const productsFilePath = path.join(__dirname, '../data/productsDataBase.json');
-const products = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
-		return res.render('products', {
-			products,
-			toThousand
-		})
+		db.Product.findAll()
+			.then(products => {
+				return res.render('products', {
+					products,
+					toThousand
+				})
+			}).catch(error => console.log(error))
+		
 	},
 
 	// Detail - Detail from one product
 	detail: (req, res) => {
 		// Do the magic
-		const id = req.params.id;
-		const product = products.find(product => product.id === +id)
-		return res.render('detail',{
-			...product,
-			toThousand
-		})
+
+		db.Product.findByPk(req.params.id)
+			.then(product => {
+				return res.render('detail',{
+					...product.dataValues,
+					toThousand
+				})
+			}).catch(error => console.log(error))
+		
 	},
 
 	// Create - Form to create
