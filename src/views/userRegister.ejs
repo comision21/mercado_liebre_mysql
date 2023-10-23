@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<%- include('partials/head',{ title : 'Login' }) %>
+
+    <body>
+        <%- include('partials/headerNavbar') %>
+
+            <div class="container products-wrapper">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="products-title">Registrate</h2>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="contenido">
+                        <div class="row">
+                            <div class="col-12 col-md-4 d-flex justify-content-center p-5">
+                                <img src="/images/logo-mercado-liebre.svg" alt="">
+                            </div>
+                            <div class="col-12 col-md-8 p-5">
+                                <form  method="POST" id="form-login" novalidate>
+                                    <div class="row product-detail">
+
+                                      <div class="col-12 col-md-6">
+                                        <label for="name" class="form-label">Nombre</label>
+                                            <input type="text"
+                                            class="form-input form-control"
+                                            id="name" name="name" required>
+                                        <small class="text-danger" id="error-name">
+                                            <%= locals.errors && errors.name ? errors.name.msg : null %>
+                                        </small>
+                                         
+                                    
+
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                      <label for="email" class="form-label">Apellido</label>
+                                          <input type="text"
+                                          class="form-input form-control"
+                                          id="surname" name="surname" required>
+                                      <small class="text-danger" id="error-surname">
+                                          <%= locals.errors && errors.surname ? errors.surname.msg : null %>
+                                      </small>
+                                       
+                                  
+
+                                  </div>
+                                        <div class="col-12 col-md-6">
+                                            <label for="email" class="form-label">Email</label>
+                                                <input type="email"
+                                                class="form-input form-control"
+                                                id="email" name="email" required>
+                                            <small class="text-danger" id="error-email">
+                                                <%= locals.errors && errors.email ? errors.email.msg : null %>
+                                            </small>
+                                             
+                                        
+
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <label for="pass" class="form-label">Contraseña</label>
+                                                <input type="password"
+                                                class="form-input form-control"
+                                                id="pass" name="password" required>
+                                            <small class="text-danger" id="error-pass">
+                                                <%= locals.errors && errors.pass ? errors.pass.msg : null %>
+                                            </small>
+                                          
+                                          
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                          <label for="pass2" class="form-label">Confirma contraseña</label>
+                                              <input type="password"
+                                              class="form-input form-control"
+                                              id="pass2" name="password2" required>
+                                          <small class="text-danger" id="error-pass2">
+                                              <%= locals.errors && errors.pass2 ? errors.pass2.msg : null %>
+                                          </small>
+                                        
+                                        
+                                      </div>
+                                    
+                                        <div class="col-12 col-md-6 d-flex justify-content-end align-items-end">
+                                            <button type="submit" class="buy-now-button" style="width: 100%; cursor: pointer; ">Registrate</button>
+
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <%- include('partials/footer') %>
+       
+    </body>
+
+</html>
