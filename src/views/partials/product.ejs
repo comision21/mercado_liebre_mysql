@@ -1,6 +1,10 @@
-<div class="product-box">
+<div class="product-box" style="position: relative;">
+    <% if (locals.userLogin) { %>
+        <h2 style="position: absolute; top: 10px; right: 10px; color: red; font-size: 2rem; cursor: pointer; border-radius: 50%; padding: 5px;"><i class="far fa-heart fa-lg"></i></h2>
+        <!-- cuando haga click -> http://localhost:300/apis/toggle-favorite?userId=userLogin.id&productId=id -->
+    <% } %>
     <a href="/products/detail/<%= id %>">
-        <figure class="product-box_image">
+        <figure class="product-box_image p-3">
             <img src="/images/products/<%= image || 'default-image.png' %>" alt="imagen de producto">
         </figure>
         <article class="product-box_data">

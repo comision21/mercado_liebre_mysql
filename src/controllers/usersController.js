@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator');
 const db = require('../database/models');
 const { hashSync } = require('bcryptjs');
+const toThousand = require('../helpers/toThousand')
 
 module.exports = {
     register : (req,res) => {
@@ -46,14 +47,15 @@ module.exports = {
             db.User.findOne({
                 where : {
                     email : req.body.email
-                }
+                },
+                include : ['favorites']
             }).then(user => {
-                console.log('>>>>>>>>>>>>>>>>>>>>>>>',user);
 
                 req.session.userLogin = {
                     id : user.id,
                     name : user.name,
-                    rol : user.rolId
+                    rol : user.rolId,
+                    favorites : user.favorites
                 }
 
                 return res.redirect('/')
@@ -81,6 +83,16 @@ module.exports = {
 
     },
     logout : (req,res) => {
+        req.session.destroy()
+        //todo MATAR LAS COOKIES
 
+        return res.redirect('/')
+    },
+    favorites : (req,res) => {
+
+        return res.render('favorites',{
+            favorites : req.session.userLogin.favorites,
+            toThousand
+        })
     }
 }

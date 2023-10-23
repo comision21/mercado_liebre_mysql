@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Items', {
+    await queryInterface.createTable('Favorites', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -25,14 +25,6 @@ module.exports = {
           }
         }
       },
-      orderId: {
-        type: Sequelize.INTEGER,
-        references : {
-          model : {
-            tableName : 'Orders'
-          }
-        }
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -44,6 +36,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Items');
+    await queryInterface.dropTable('Favorites');
   }
 };

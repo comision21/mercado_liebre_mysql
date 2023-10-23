@@ -35,11 +35,10 @@ app.use(paginate.middleware(4,50));
 const mainRouter = require('./routes/main'); // Rutas main
 const productsRouter = require('./routes/products'); // Rutas /products
 const usersRouter = require('./routes/users');
-const adminRouter = require('./routes/apis');
+const apiRouter = require('./routes/apis');
 
 
 app.use((req,res,next) => {
-  console.log('>>>>>>>>>>>>>>>>>>>>>>>',req.session.userLogin);
   if(req.session.userLogin){
     res.locals.userLogin = req.session.userLogin
   }
@@ -51,7 +50,7 @@ app.use('/', mainRouter);
 app.use('/products', productsRouter);
 app.use('/users',usersRouter)
 
-app.use('/apis/products',adminRouter);
+app.use('/apis',apiRouter);
 
 
 
