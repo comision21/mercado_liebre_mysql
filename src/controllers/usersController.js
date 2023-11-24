@@ -48,7 +48,6 @@ module.exports = {
                 where : {
                     email : req.body.email
                 },
-                include : ['favorites']
             }).then(user => {
 
                 req.session.userLogin = {
@@ -58,7 +57,54 @@ module.exports = {
                     favorites : user.favorites
                 }
 
-                return res.redirect('/')
+                db.Order.findOne({
+                    where: {
+                      userId: user.id,
+                      statusId: 1,
+                    },
+                    include: [
+                      {
+                        association: "items",
+                        include: [
+                          {
+                            association: "product",
+                          },
+                        ],
+                      },
+                    ],
+                  }).then(order => {
+                    if(order){
+                        req.session.cart = {
+                            orderId: order.id,
+                            total: order.total,
+                            products: order.items.map(
+                              ({ quantity, product: { name, price, discount, image } }) => {
+                                return {
+                                  name,
+                                  price,
+                                  discount,
+                                  image,
+                                  quantity,
+                                };
+                              }
+                            ),
+                          };
+                          return res.redirect("/");
+                    }else{
+                        db.Order.create({
+                            total : 0,
+                            userId : user.id,
+                            statusId : 1
+                          }).then(order => {
+                            req.session.cart = {
+                              orderId: order.id,
+                              total: 0,
+                              products: [],
+                            };
+                            return res.redirect("/");
+                          })
+                    }
+                  })
 
             }).catch(error => console.log(error))
             
